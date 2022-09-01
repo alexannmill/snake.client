@@ -1,40 +1,39 @@
-
-let connection;
+const { createConnection } = require("net");
 
 const setUpInput = (conn) => {
   const stin = process.stdin;
   stin.setRawMode(true);
   stin.setEncoding("utf8");
   stin.resume();
-  connection = conn
   stin.on("data", (key) => {
-   handleUserInput(key, connection)
+    handleUserInput(key, conn);
   });
-  return stin
+  return stin;
 };
 
-
-const handleUserInput = (data, setUpInput) => {
-  switch(data) {
-    case '\u0003':
+const handleUserInput = (data, connection) => {
+  switch (data) {
+    case "\u0003":
       process.exit();
       break;
-    case '\u0077':
-      console.log("Move up")
-    break;
-    case '\u0073':
-      console.log("Move down")
-    break;
-    case '\u0061':
-      console.log("Move left")
-    break;
-    case '\u0064':
-      console.log("Move right")
-    break;
+    case "\u0077":
+      connection.write("Move: up");
+      break;
+    case "\u0073":
+      connection.write("Move: down");
+      break;
+    case "\u0061":
+      connection.write("Move: left");
+      break;
+    case "\u0064":
+      connection.write("Move: right");
+      break;
+    case "\u0074":
+      connection.write("Say: touchdown");
+      break;
   }
 };
 
-
 module.exports = {
   setUpInput,
-}
+};
