@@ -1,11 +1,12 @@
 const { time } = require("console");
 const net = require("net");
 const setUpInput = require("./play");
+const {host, port} = require("./constants")
 
 const connect = () => {
   const conn = net.createConnection({
-    host: "localhost",
-    port: 50541,
+    host,
+    port
   });
   conn.setEncoding("utf8");
 
